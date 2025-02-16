@@ -1,16 +1,15 @@
 import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
-import React from 'react';
 import { Transaction } from '../types';
 import { financeCalculations } from '../utils/financeCalculations';
 import { formatCurrency } from '../utils/formatting';
 
 interface DailySummaryProps {
-    dailyTransactions: Transaction[]
-    columns: number
+  dailyTransactions: Transaction[];
+  columns: number;
 }
-const DailySummary = ({dailyTransactions,columns}:DailySummaryProps) => {
-    const {income, expense, balance } = financeCalculations(dailyTransactions)
-    const isThreeColumnsLayout =  columns === 3
+const DailySummary = ({ dailyTransactions, columns }: DailySummaryProps) => {
+  const { income, expense, balance } = financeCalculations(dailyTransactions);
+  const isThreeColumnsLayout = columns === 3;
   return (
     <Box>
       <Grid container spacing={2}>
@@ -25,6 +24,8 @@ const DailySummary = ({dailyTransactions,columns}:DailySummaryProps) => {
                 収入
               </Typography>
               <Typography
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
                 color={(theme) => theme.palette.incomeColor.main}
                 textAlign="right"
                 fontWeight="fontWeightBold"
@@ -45,6 +46,8 @@ const DailySummary = ({dailyTransactions,columns}:DailySummaryProps) => {
                 支出
               </Typography>
               <Typography
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
                 color={(theme) => theme.palette.expenseColor.main}
                 textAlign="right"
                 fontWeight="fontWeightBold"
@@ -65,6 +68,8 @@ const DailySummary = ({dailyTransactions,columns}:DailySummaryProps) => {
                 残高
               </Typography>
               <Typography
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
                 color={(theme) => theme.palette.balanceColor.main}
                 textAlign="right"
                 fontWeight="fontWeightBold"

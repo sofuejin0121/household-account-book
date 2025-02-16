@@ -11,11 +11,9 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import React from 'react';
 //アイコン
 import NotesIcon from '@mui/icons-material/Notes';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import FastfoodIcon from '@mui/icons-material/Fastfood';
 import DailySummary from './DailySummary';
 import { Transaction } from '../types';
 import { formatCurrency } from '../utils/formatting';
@@ -111,8 +109,12 @@ const TransactionMenu = ({
                       width: '100%',
                       backgroundColor:
                         transaction.type === 'income'
-                          ? (theme) => theme.palette.incomeColor.light
-                          : (theme) => theme.palette.expenseColor.light,
+                          ? // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                            // @ts-expect-error
+                            (theme) => theme.palette.incomeColor.light
+                          : // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                            // @ts-expect-error
+                            (theme) => theme.palette.expenseColor.light,
                     }}
                     onClick={() => onSelectTransaction(transaction)}
                   >
@@ -126,7 +128,7 @@ const TransactionMenu = ({
                         >
                           <Grid item xs={1}>
                             {/* icon */}
-                            {IconComponents[transaction.category]}
+                            {transaction.category === "" ? null : IconComponents[transaction.category]}
                           </Grid>
                           <Grid item xs={2.5}>
                             <Typography

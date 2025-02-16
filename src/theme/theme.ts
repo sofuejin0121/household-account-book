@@ -1,4 +1,4 @@
-import { createTheme, PaletteColorOptions, PaletteMode } from '@mui/material';
+import { createTheme, PaletteColorOptions } from '@mui/material';
 import {
   amber,
   blue,

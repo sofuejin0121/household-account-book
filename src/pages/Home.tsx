@@ -1,12 +1,11 @@
-import { Box, useMediaQuery, useTheme } from '@mui/material';
-import React, { useMemo, useState } from 'react';
+import { Box } from '@mui/material';
+import { useMemo, useState } from 'react';
 import MonthlySummary from '../components/MonthlySummary';
 import Calendar from '../components/Calendar';
 import TransactionMenu from '../components/TransactionMenu';
 import TransactionForm from '../components/TransactionForm';
 import { Transaction } from '../types';
 import { format } from 'date-fns';
-import { Schema } from '../validations/schema';
 import { DateClickArg } from '@fullcalendar/interaction/index.js';
 import { useAppContext } from '../context/AppContext';
 import useMonthlyTransactions from '../hooks/useMonthlyTransactions';

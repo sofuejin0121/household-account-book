@@ -2,7 +2,6 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { ja } from 'date-fns/locale/ja';
 import { Box, Button } from '@mui/material';
-import React from 'react';
 import { addMonths } from 'date-fns';
 import { useAppContext } from '../context/AppContext';
 

@@ -29,6 +29,7 @@ interface AppContextType {
     transactionId: string
   ) => Promise<void>;
 }
+// eslint-disable-next-line react-refresh/only-export-components
 export const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
@@ -121,7 +122,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         t.id === transactionId ? { ...t, ...transaction } : t
       );
       setTransactions(updatedTransactions);
-    } catch {
+    } catch(err) {
       if (isFireStoreError(err)) {
         console.log('firestoreのエラーは:', err);
       } else {
@@ -149,6 +150,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAppContext = () => {
   const context = useContext(AppContext);
   if (!context) {

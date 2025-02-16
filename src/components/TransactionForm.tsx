@@ -15,7 +15,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React, { JSX, useContext, useEffect, useState } from 'react';
+import React, { JSX, useEffect, useMemo, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close'; // 閉じるボタン用のアイコン
 import FastfoodIcon from '@mui/icons-material/Fastfood'; //食事アイコン
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
@@ -31,7 +31,7 @@ import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Schema, transactionSchema } from '../validations/schema';
 import { Transaction } from '../types';
-import { AppContext, useAppContext } from '../context/AppContext';
+import { useAppContext } from '../context/AppContext';
 interface TransactionFormProps {
   onCloseForm: () => void;
   isEntryDrawerOpen: boolean;
@@ -71,24 +71,35 @@ const TransactionForm = ({
   isDialogOpen,
   setIsDialogOpen,
 }: TransactionFormProps) => {
-  const {isMobile, onSaveTransaction, onDeleteTransaction, onUpdateTransaction} = useAppContext()
+  const {
+    isMobile,
+    onSaveTransaction,
+    onDeleteTransaction,
+    onUpdateTransaction,
+  } = useAppContext();
   const formWidth = 320;
 
   //支出用カテゴリ
-  const expenseCategories: CategoryItem[] = [
-    { label: '食費', icon: <FastfoodIcon fontSize="small" /> },
-    { label: '日用品', icon: <AlarmIcon fontSize="small" /> },
-    { label: '住居費', icon: <AddHomeIcon fontSize="small" /> },
-    { label: '交際費', icon: <Diversity3Icon fontSize="small" /> },
-    { label: '娯楽', icon: <SportsTennisIcon fontSize="small" /> },
-    { label: '交通費', icon: <TrainIcon fontSize="small" /> },
-  ];
+  const expenseCategories: CategoryItem[] = useMemo(
+    () => [
+      { label: '食費', icon: <FastfoodIcon fontSize="small" /> },
+      { label: '日用品', icon: <AlarmIcon fontSize="small" /> },
+      { label: '住居費', icon: <AddHomeIcon fontSize="small" /> },
+      { label: '交際費', icon: <Diversity3Icon fontSize="small" /> },
+      { label: '娯楽', icon: <SportsTennisIcon fontSize="small" /> },
+      { label: '交通費', icon: <TrainIcon fontSize="small" /> },
+    ],
+    []
+  );
   // 収入用カテゴリ
-  const incomeCategories: CategoryItem[] = [
-    { label: '給与', icon: <WorkIcon fontSize="small" /> },
-    { label: '副収入', icon: <AddBusinessIcon fontSize="small" /> },
-    { label: 'お小遣い', icon: <SavingsIcon fontSize="small" /> },
-  ];
+  const incomeCategories: CategoryItem[] = useMemo(
+    () => [
+      { label: '給与', icon: <WorkIcon fontSize="small" /> },
+      { label: '副収入', icon: <AddBusinessIcon fontSize="small" /> },
+      { label: 'お小遣い', icon: <SavingsIcon fontSize="small" /> },
+    ],
+    []
+  );
   const [categories, setCategories] = useState(expenseCategories);
   const {
     control,
@@ -118,16 +129,15 @@ const TransactionForm = ({
     const newCategories =
       currentType === 'expense' ? expenseCategories : incomeCategories;
     setCategories(newCategories);
-  }, [currentType]);
+  }, [currentType, expenseCategories, incomeCategories]);
   //送信処理
   const onSubmit: SubmitHandler<Schema> = (data) => {
-
     if (selectedTransaction) {
       onUpdateTransaction(data, selectedTransaction.id)
         .then(() => {
           setSelectedTransaction(null);
-          if(isMobile) {
-            setIsDialogOpen(false)
+          if (isMobile) {
+            setIsDialogOpen(false);
           }
         })
         .catch((error) => {
@@ -177,7 +187,7 @@ const TransactionForm = ({
       // categoryExistsがfalse → 空文字をセット
       setValue('category', categoryExists ? selectedTransaction.category : '');
     }
-  }, [selectedTransaction, categories]); // この配列内の値が変更されると、useEffect内の処理が実行される
+  }, [selectedTransaction, categories, setValue]); // この配列内の値が変更されると、useEffect内の処理が実行される
 
   /* 具体例:
 1. 収入カテゴリ表示中に支出の取引（食費）を選択した場合:
@@ -206,11 +216,11 @@ const TransactionForm = ({
         content: '',
       });
     }
-  }, [selectedTransaction]);
+  }, [currentDay, reset, selectedTransaction, setValue]);
 
   useEffect(() => {
     setValue('date', currentDay);
-  }, [currentDay]);
+  }, [currentDay, setValue]);
 
   //削除処理
   const handleDelete = () => {
@@ -218,8 +228,8 @@ const TransactionForm = ({
     if (selectedTransaction) {
       onDeleteTransaction(selectedTransaction.id);
       //取引の選択が解除される
-      if(isMobile) {
-        setIsDialogOpen(false)
+      if (isMobile) {
+        setIsDialogOpen(false);
       }
       setSelectedTransaction(null);
     }
@@ -383,7 +393,12 @@ const TransactionForm = ({
     <>
       {isMobile ? (
         //mobile用
-        <Dialog open={isDialogOpen} onClose={onCloseForm}fullWidth maxWidth={"sm"}>
+        <Dialog
+          open={isDialogOpen}
+          onClose={onCloseForm}
+          fullWidth
+          maxWidth={'sm'}
+        >
           <DialogContent>{formContent}</DialogContent>
         </Dialog>
       ) : (
@@ -406,7 +421,9 @@ const TransactionForm = ({
             boxSizing: 'border-box', // ボーダーとパディングをwidthに含める
             boxShadow: '0px 0px 15px -5px #777777',
           }}
-        >{formContent}</Box>
+        >
+          {formContent}
+        </Box>
       )}
     </>
   );

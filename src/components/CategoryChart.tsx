@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -15,14 +15,12 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
-  TextField,
   Typography,
   useTheme,
 } from '@mui/material';
 import {
   ExpenseCategory,
   IncomeCategory,
-  Transaction,
   TransactionType,
 } from '../types';
 import { useAppContext } from '../context/AppContext';
@@ -53,6 +51,9 @@ const CategoryChart = (
     .filter((transaction) => transaction.type === selectedType)
     .reduce<Record<IncomeCategory | ExpenseCategory, number>>(
       (acc, transaction) => {
+        if(transaction.category === "") {
+          return acc
+        }
         if (!acc[transaction.category]) {
           acc[transaction.category] = 0;
         }

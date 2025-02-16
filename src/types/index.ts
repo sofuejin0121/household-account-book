@@ -14,7 +14,7 @@ export interface Transaction {
   amount: number;
   content: string;
   type: TransactionType;
-  category: IncomeCategory | ExpenseCategory;
+  category: IncomeCategory | ExpenseCategory | '';
 }
 export interface Balance {
   income: number;

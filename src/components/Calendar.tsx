@@ -4,7 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import jaLocale from '@fullcalendar/core/locales/ja';
 import '../calendar.css';
 import { DatesSetArg, EventContentArg } from '@fullcalendar/core/index.js';
-import { Balance, CalendarContent, Transaction } from '../types';
+import { Balance, CalendarContent } from '../types';
 import { calculateDailyBalances } from '../utils/financeCalculations';
 import { formatCurrency } from '../utils/formatting';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
@@ -19,7 +19,7 @@ interface CalendarProps {
   setCurrentDay: React.Dispatch<React.SetStateAction<string>>;
   currentDay: string;
   today: string;
-  onDateClick:(dateInfo: DateClickArg) => void;
+  onDateClick: (dateInfo: DateClickArg) => void;
 }
 
 const Calendar = ({
@@ -30,8 +30,8 @@ const Calendar = ({
   today,
   onDateClick,
 }: CalendarProps) => {
-  const monthlyTransactions = useMonthlyTransactions()
-  const {setCurrentMonth}= useAppContext()
+  const monthlyTransactions = useMonthlyTransactions();
+  const { setCurrentMonth } = useAppContext();
   const theme = useTheme();
   // const events = [
   //   {
@@ -91,11 +91,12 @@ const Calendar = ({
   const backgroundEvent = {
     start: currentDay,
     display: 'background',
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     backgroundColor: theme.palette.incomeColor.light,
   };
 
   const calendarEvents = createCalendarEvents(dailyBalances);
-  console.log(calendarEvents);
 
   return (
     <FullCalendar

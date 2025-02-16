@@ -1,4 +1,4 @@
-import React from 'react';
+import { JSX } from 'react';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import { ExpenseCategory, IncomeCategory } from '../../types';
 import AlarmIcon from '@mui/icons-material/Alarm';

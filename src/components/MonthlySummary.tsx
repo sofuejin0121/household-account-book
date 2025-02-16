@@ -1,9 +1,7 @@
 import { Card, CardContent, Stack, Typography, Grid } from '@mui/material';
-import React from 'react';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import { Transaction } from '../types';
 import { financeCalculations } from '../utils/financeCalculations';
 import { formatCurrency } from '../utils/formatting';
 import useMonthlyTransactions from '../hooks/useMonthlyTransactions';
@@ -23,6 +21,8 @@ const MonthlySummary = (
       <Grid item xs={4} sx={{ display: 'flex', flexDirection: 'column' }}>
         <Card
           sx={{
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             bgcolor: (theme) => theme.palette.incomeColor.main,
             color: 'white',
             borderRadius: '10px',
@@ -52,6 +52,8 @@ const MonthlySummary = (
       <Grid item xs={4} sx={{ display: 'flex', flexDirection: 'column' }}>
         <Card
           sx={{
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             bgcolor: (theme) => theme.palette.expenseColor.main,
             color: 'white',
             borderRadius: '10px',
@@ -81,6 +83,8 @@ const MonthlySummary = (
       <Grid item xs={4} sx={{ display: 'flex', flexDirection: 'column' }}>
         <Card
           sx={{
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             bgcolor: (theme) => theme.palette.balanceColor.main,
             color: 'white',
             borderRadius: '10px',

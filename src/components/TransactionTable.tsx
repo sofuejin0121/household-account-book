@@ -15,7 +15,6 @@ import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Transaction } from '../types';
 import { financeCalculations } from '../utils/financeCalculations';
 import { Grid } from '@mui/material';
 import { formatCurrency } from '../utils/formatting';
@@ -163,7 +162,7 @@ export default function TransactionTable(
     setSelected([]);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, id: string) => {
+  const handleClick = (_event: React.MouseEvent<unknown>, id: string) => {
     const selectedIndex = selected.indexOf(id);
     let newSelected: readonly string[] = [];
 
@@ -182,7 +181,7 @@ export default function TransactionTable(
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
@@ -223,16 +222,22 @@ export default function TransactionTable(
           <FinancialItem
             title={'収入'}
             value={income}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             color={theme.palette.incomeColor.main}
           />
           <FinancialItem
             title={'支出'}
             value={expense}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             color={theme.palette.expenseColor.main}
           />
           <FinancialItem
             title={'残高'}
             value={balance}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             color={theme.palette.balanceColor.main}
           />
         </Grid>
@@ -291,7 +296,7 @@ export default function TransactionTable(
                       align="left"
                       sx={{ display: 'flex', alignItems: 'center' }}
                     >
-                      {IconComponents[transaction.category]}
+                      {transaction.category === "" ? null : IconComponents[transaction.category]}
                       {transaction.category}
                     </TableCell>
                     <TableCell align="left">{transaction.amount}</TableCell>
